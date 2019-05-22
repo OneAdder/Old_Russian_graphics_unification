@@ -1,5 +1,10 @@
-from distutils.core import setup
-from Cython.Build import cythonize
+from setuptools import setup, Extension
+try:
+    from Cython.Build import cythonize
+except ImportError:
+    ext_modules = [Extension('old_russian_unification.c', ['old_russian_unification.c'])]
+else:
+    ext_modules = cythonize('old_russian_unification.pyx')
 
 setup(
     name='old_russian_graphics_unification',
@@ -11,15 +16,6 @@ setup(
     license='GPLv3',
     python_requires='>=3.5',
     zip_safe=False,
-    install_requires=['cython'],
-    classifiers=[
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3 :: Only',
-        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
-        'Topic :: Scientific/Engineering',
-        'Topic :: Text Processing :: Linguistic',
-        'Natural Language :: Russian',
-    ],
-    ext_modules = cythonize("old_russian_unification.pyx")
+    ext_modules=ext_modules
 )
  
